@@ -76,7 +76,8 @@
                                         <template v-if="!load_data">
                                             <div>
                                                 <!-- List -->
-                                                <ul id="my-table" class="list-group list-group-lg list-group-flush list my-n4"
+                                                <ul id="my-table"
+                                                    class="list-group list-group-lg list-group-flush list my-n4"
                                                     v-if="productos.length >= 1">
                                                     <li class="list-group-item" v-for="item in itemsForList">
                                                         <div class="row align-items-center">
@@ -120,7 +121,12 @@
                                                                         <i class="fe fe-more-vertical"></i>
                                                                     </a>
                                                                     <div class="dropdown-menu dropdown-menu-end">
-                                                                        <router-link :to="{name: 'producto-edit', params: {id: item._id}}" class="dropdown-item">Editar</router-link>
+                                                                        <router-link
+                                                                            :to="{ name: 'producto-edit', params: { id: item._id } }"
+                                                                            class="dropdown-item">Editar</router-link>
+                                                                        <router-link
+                                                                            :to="{ name: 'producto-galeria', params: { id: item._id } }"
+                                                                            class="dropdown-item">Galería</router-link>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -150,8 +156,8 @@
                                     </div>
                                 </div>
                                 <div class="card-footer">
-                                    <b-pagination v-model="currentPage" :total-rows="productos.length" :per-page="perPage"
-                                        aria-controls="my-table"></b-pagination>
+                                    <b-pagination v-model="currentPage" :total-rows="productos.length"
+                                        :per-page="perPage" aria-controls="my-table"></b-pagination>
                                 </div>
                             </div>
                         </div>
@@ -180,7 +186,7 @@ export default {
             perPage: 5,
             get itemsForList() {
                 return this.productos.slice(
-                    (this.currentPage - 1 ) * this.perPage, this.currentPage * this.perPage
+                    (this.currentPage - 1) * this.perPage, this.currentPage * this.perPage
                 )
             }
         }

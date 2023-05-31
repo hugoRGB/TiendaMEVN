@@ -8,6 +8,7 @@ import IndexColaboradorApp from '../views/colaboradores/IndexColaboradorApp.vue'
 import CreateProductoApp from '../views/productos/CreateProductoApp.vue'
 import IndexProductoApp from '../views/productos/IndexProductoApp.vue'
 import EditProductoApp from '../views/productos/EditProductoApp.vue'
+import GaleriaProductoApp from '../views/productos/GaleriaProductoApp.vue'
 import CreateIngresoApp from '../views/ingresos/CreateIngresoApp.vue'
 import jwt_decode from 'jwt-decode'
 
@@ -19,11 +20,11 @@ const routes = [
   { path: '/colaborador/create', name: 'colaborador-create', component: CreateColaboradorApp, meta: { requiresAuth: true } },
   { path: '/colaborador/edit/:id', name: 'colaborador-edit', component: () => import('@/views/colaboradores/EditColaboradorApp.vue'), meta: { requiresAuth: true } },
   { path: '/dashboard', name: 'dashboard', component: () => import('@/views/DashboardApp.vue'), meta: { requiresAuth: true } },
-  // { path: '/about', name: 'about' }
 
   { path: '/producto/create', name: 'producto-create', component: CreateProductoApp, meta: { requiresAuth: true } },
   { path: '/producto', name: 'producto-index', component: IndexProductoApp, meta: { requiresAuth: true } },
   { path: '/producto/edit/:id', name: 'producto-edit', component: EditProductoApp, meta: { requiresAuth: true } },
+  { path: '/producto/galeria/:id', name: 'producto-galeria', component: GaleriaProductoApp, meta: { requiresAuth: true } },
 
   { path: '/ingreso/create', name: 'ingreso-create', component: CreateIngresoApp, meta: { requiresAuth: true } },
 ]

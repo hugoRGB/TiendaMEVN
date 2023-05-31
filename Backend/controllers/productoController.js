@@ -1,5 +1,8 @@
 var Producto = require('../models/producto');
+var Galeria = require('../models/galeria');
 var Variedad = require('../models/variedad');
+var Ingreso = require('../models/variedad');
+var Ingreso_detalle = require('../models/ingreso_detalle');
 var slugify = require('slugify');
 var fs = require('fs');
 var path = require('path');
@@ -220,6 +223,46 @@ const listar_activos_productos_admin = async function (req, res) {
     }
 }
 
+const registro_ingreso_admin = async function (req, res) {
+    if (req.user) {
+        let data = req.body;
+        let detalles = data.detalles;
+
+        var img_path = req.files.documento.path;
+        var str_img = img_path.split('\\');
+        var str_documento = str_img[2];
+        data.documento = str_documento;
+        data.usuario = req.user.sub;
+
+        let ingreso = await Ingreso.create(data);
+        res.status(200).send(ingreso);
+    } else {
+        res.status(500).send({ data: undefined, message: 'ErrorToken' });
+    }
+}
+
+const subir_imagen_producto_admin = async function (req, res) {
+    if (req.user) {
+        let data = req.body;
+
+        // Registro del producto
+        var img_path = req.files.imagen.path;
+        var str_img = img_path.split('\\');
+        var str_imagen = str_img[2];
+
+        data.imagen = str_imagen;
+
+        try {
+            let imagen = await Galeria.create(data);
+            res.status(200).send(imagen);
+        } catch (error) {
+            res.status(200).send({ data: undefined, message: 'Error al guardar el producto.' });
+        }
+    } else {
+        res.status(500).send({ data: undefined, message: 'ErrorToken' });
+    }
+}
+
 module.exports = {
     registro_producto_admin,
     listar_productos_admin,
@@ -229,5 +272,7 @@ module.exports = {
     registro_variedad_producto,
     obtener_variedades_producto,
     eliminar_variedad_producto,
-    listar_activos_productos_admin
+    listar_activos_productos_admin,
+    registro_ingreso_admin,
+    subir_imagen_producto_admin
 }

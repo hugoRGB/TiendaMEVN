@@ -1,4 +1,4 @@
-const testing = async function(req, res) {
+const testing = async function (req, res) {
     res.status(200).send('Hola Testing 3');
 }
 

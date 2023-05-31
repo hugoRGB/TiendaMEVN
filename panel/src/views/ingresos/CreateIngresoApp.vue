@@ -2,7 +2,7 @@
     <div>
         <SideBar />
         <div class="main-content">
-            <TopNav/>
+            <TopNav />
             <div class="container-fluid">
                 <div class="row justify-content-center">
                     <div class="col-12 col-lg-10 col-xl-8">
@@ -31,7 +31,7 @@
                                                 </a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link active">Nuevo ingreso</a>
+                                                <a class="nav-link active">Nuevo Ingreso</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -47,7 +47,7 @@
                                         Proveedor
                                     </label>
                                     <small class="form-text text-muted">
-                                        Proveedor encargado del ingreso.
+                                        Proveedor encargado del Ingreso.
                                     </small>
                                     <!-- Input -->
                                     <select class="form-select mb-3" v-model="ingreso.proveedor">
@@ -63,7 +63,7 @@
                                 <div class="form-group">
                                     <!-- Label -->
                                     <label class="form-label">
-                                        N° comprobante
+                                        No. de Comprobante
                                     </label>
                                     <small class="form-text text-muted">
                                         Número de la factura.
@@ -103,7 +103,7 @@
                                 </div>
                             </div>
                         </div>
-                        <hr class="my-5">
+                        <hr class="my-3">
                         <div class="row">
                             <div class="col-md-12 mb-4">
                                 <h3><b>Productos del ingreso</b></h3>
@@ -134,10 +134,11 @@
                                     <small class="form-text text-muted">
                                         Seleccion de variedad.
                                     </small>
-                                    <select class="form-select mb-3">
+                                    <select class="form-select mb-3" v-model="detalle.variedad">
                                         <option value="" selected disabled>Seleccionar</option>
                                         <option :value="item._id" v-for="item in variedades">
-                                            {{ item.variedad.toUpperCase() }} - {{ item.sku }} - {{ item.stock }}</option>
+                                            {{ item.variedad.toUpperCase() }} - {{ item.sku }} - {{ item.stock }}
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -152,7 +153,8 @@
                                         Precio por unidad pagado.
                                     </small>
                                     <!-- Input -->
-                                    <input type="text" class="form-control mb-3" placeholder="0.00">
+                                    <input type="text" class="form-control mb-3" placeholder="0.00"
+                                        v-model="detalle.precio_unidad">
                                 </div>
                             </div>
                             <div class="col-12 col-md-6">
@@ -166,11 +168,13 @@
                                         Cantidad total comprada
                                     </small>
                                     <!-- Input -->
-                                    <input type="number" class="form-control mb-3" placeholder="0">
+                                    <input type="number" class="form-control mb-3" placeholder="0"
+                                        v-model="detalle.cantidad">
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <button class="btn btn-primary" style="margin-bottom: 1.8rem!important;">
+                                <button class="btn btn-primary" style="margin-bottom: 1.8rem!important;"
+                                    v-on:click="agregar_detalle()">
                                     Agregar
                                 </button>
                             </div>
@@ -181,33 +185,53 @@
                                 <table class="table table-sm table-nowrap card-table">
                                     <thead>
                                         <tr>
-                                            <th>Invoice ID</th>
-                                            <th>Date</th>
-                                            <th>Amount</th>
-                                            <th>Status</th>
+                                            <th>Producto</th>
+                                            <th>Precio unidad</th>
+                                            <th>Cantidad</th>
+                                            <th>Subtotal</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
-                                    <tbody class="fs-base">
-                                        <tr>
+                                    <tbody class="fs-base" v-if="detalles.length >= 1">
+                                        <tr v-for="(item, index) in detalles">
                                             <td>
-                                                <a href="invoice.html">Invoice #10395</a>
+                                                <a href="invoice.html">{{ item.titulo_producto }}</a>
                                             </td>
                                             <td>
-                                                <time datetime="2020-04-24">Apr. 24, 2020</time>
+                                                <time datetime="2020-04-24">{{
+                                                        convertCurrency(item.precio_unidad)
+                                                }}</time>
                                             </td>
                                             <td>
-                                                $29.00
+                                                {{ item.cantidad }}
                                             </td>
                                             <td>
-                                                <button class="btn btn-danger btn-sm">Quitar</button>
+                                                {{ convertCurrency(item.precio_unidad * item.cantidad) }}
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-danger btn-sm"
+                                                    v-on:click="quitarDetalle(index, item.precio_unidad * item.cantidad)">Quitar</button>
                                             </td>
                                         </tr>
                                     </tbody>
+                                    <tbody class="fs-base" v-if="detalles.length == 0">
+                                        <tr>
+                                            <td class="text-center" colspan="5">
+                                                <span class="text-muted">No hay detalles en el ingreso</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="4">Total</td>
+                                            <td>{{ convertCurrency(total) }}</td>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
                         </div>
                         <button class="btn btn-primary mb-7">
-                            Ingresar datos
+                            Ingresar Datos
                         </button>
                     </div>
                 </div> <!-- / .row -->
@@ -221,6 +245,7 @@ import SideBar from '@/components/SideBar.vue';
 import TopNav from '@/components/TopNav.vue';
 import { BasicSelect } from 'vue-search-select';
 import axios from 'axios';
+import currency_formatter from 'currency-formatter';
 
 export default {
     name: 'CreateIngresoApp',
@@ -229,10 +254,15 @@ export default {
             ingreso: {
                 proveedor: ''
             },
+            detalle: {
+                variedad: ''
+            },
+            detalles: [],
             comprobante: undefined,
             producto: {},
             productos: [],
             variedades: [],
+            total: 0
         }
     },
     methods: {
@@ -284,8 +314,10 @@ export default {
             });
         },
         producto_selected(item) {
-            console.log(item);
+            this.producto = item;
             this.init_variedades(item.value);
+            this.detalle.producto = item.value;
+            this.detalle.titulo_producto = item.text;
         },
         init_variedades(id) {
             axios.get(this.$url + '/obtener_variedades_producto/' + id, {
@@ -298,6 +330,54 @@ export default {
                 console.log(this.variedades);
             });
         },
+        agregar_detalle() {
+            if (!this.detalle.producto) {
+                this.$notify({
+                    group: 'foo',
+                    title: 'ERROR',
+                    text: 'Seleccione el producto.',
+                    type: 'error'
+                });
+            } else if (!this.detalle.variedad) {
+                this.$notify({
+                    group: 'foo',
+                    title: 'ERROR',
+                    text: 'Seleccione la variedad.',
+                    type: 'error'
+                });
+            } else if (!this.detalle.precio_unidad) {
+                this.$notify({
+                    group: 'foo',
+                    title: 'ERROR',
+                    text: 'Ingrese el precio por unidad.',
+                    type: 'error'
+                });
+            } else if (!this.detalle.cantidad) {
+                this.$notify({
+                    group: 'foo',
+                    title: 'ERROR',
+                    text: 'Ingrese la cantidad a ingresar.',
+                    type: 'error'
+                });
+            } else {
+                this.detalles.push(this.detalle);
+
+                let subtotal = this.detalle.precio_unidad * this.detalle.cantidad;
+                this.total = this.total + subtotal;
+                this.detalle = {
+                    variedad: ''
+                }
+                this.producto = {};
+            }
+            console.log(this.detalles);
+        },
+        convertCurrency(number) {
+            return currency_formatter.format(number, { code: 'USD' });
+        },
+        quitarDetalle(idx, subtotal) {
+            this.detalles.splice(idx, 1);
+            this.total = this.total - subtotal;
+        }
     },
     beforeMount() {
         this.init_productos();
