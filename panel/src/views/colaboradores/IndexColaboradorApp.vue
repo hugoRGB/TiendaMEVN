@@ -161,7 +161,8 @@
                                         <!-- Pagination (prev) -->
                                         <ul class="list-pagination-prev pagination pagination-tabs card-pagination">
                                             <li class="page-item">
-                                                <a class="page-link ps-0 pe-4 border-end" v-on:click="goPrev()" style="cursor:pointer">
+                                                <a class="page-link ps-0 pe-4 border-end" v-on:click="goPrev()"
+                                                    style="cursor:pointer">
                                                     <i class="fe fe-arrow-left me-1"></i> Prev
                                                 </a>
                                             </li>
@@ -173,7 +174,8 @@
                                         <!-- Pagination (next) -->
                                         <ul class="list-pagination-next pagination pagination-tabs card-pagination">
                                             <li class="page-item">
-                                                <a class="page-link ps-4 pe-0 border-start" v-on:click="goNext()" style="cursor:pointer">
+                                                <a class="page-link ps-4 pe-0 border-start" v-on:click="goNext()"
+                                                    style="cursor:pointer">
                                                     Next <i class="fe fe-arrow-right ms-1"></i>
                                                 </a>
                                             </li>

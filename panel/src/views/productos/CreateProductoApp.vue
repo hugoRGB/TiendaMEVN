@@ -93,9 +93,15 @@
                                         <!-- Input -->
                                         <select name="" class="form-select" v-model="producto.categoria">
                                             <option value="" disabled selected>Seleccionar</option>
-                                            <option value="Categoria 1">Categoria 1</option>
-                                            <option value="Categoria 2">Categoria 2</option>
-                                            <option value="Categoria 3">Categoria 3</option>
+                                            <option value="Acción">Acción</option>
+                                            <option value="Aventura">Aventura</option>
+                                            <option value="Deportes">Deportes</option>
+                                            <option value="Disparos">Disparos</option>
+                                            <option value="Estrategia">Estrategia</option>
+                                            <option value="Musical">Musical</option>
+                                            <option value="Peleas">Terror</option>
+                                            <option value="Vehiculos">Vehiculos</option>
+                                            <option value="Peleas">Peleas</option>
                                         </select>
                                     </div>
                                 </div>
