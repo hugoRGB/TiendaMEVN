@@ -1,5 +1,6 @@
 <template>
-    <div class="d-flex align-items-center bg-auth border-top border-top-2 border-primary" style="height: 100% !important">
+    <div class="d-flex align-items-center bg-auth border-top border-top-2 border-primary"
+        style="height: 100% !important">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 col-md-5 col-xl-4 my-5">
@@ -38,7 +39,8 @@
                             <!-- Input group -->
                             <div class="input-group input-group-merge">
                                 <!-- Input -->
-                                <input class="form-control" v-model="password" type="password" placeholder="Ingrese su contraseña">
+                                <input class="form-control" v-model="password" type="password"
+                                    placeholder="Ingrese su contraseña">
 
                                 <!-- Icon -->
                                 <span class="input-group-text">
@@ -101,7 +103,7 @@ export default {
 
                 if (result.data.token) {
                     this.$store.dispatch('saveToken', result.data.token);
-                    this.$router.push({name: 'dashboard'});
+                    this.$router.push({ name: 'dashboard' });
                 }
             }).catch((error) => {
                 console.log(error);
