@@ -99,9 +99,9 @@
                                             <option value="Disparos">Disparos</option>
                                             <option value="Estrategia">Estrategia</option>
                                             <option value="Musical">Musical</option>
+                                            <option value="Peleas">Peleas</option>
                                             <option value="Peleas">Terror</option>
                                             <option value="Vehiculos">Vehiculos</option>
-                                            <option value="Peleas">Peleas</option>
                                         </select>
                                     </div>
                                 </div>

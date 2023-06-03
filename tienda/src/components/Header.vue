@@ -3,55 +3,12 @@
         <!-- Top Bar-->
         <div class="top-bar">
             <div class="container-fluid">
-                <div class="row d-flex align-items-center">
-                    <div class="col-sm-7 d-none d-sm-block">
-                        <ul class="list-inline topbar-text mb-0">
-                            <li class="list-inline-item pe-3 me-0">
-                                <img src="/assets/icons/telephone-bl.png" style="width: 16px;">
-                                020-800-456-747
-                            </li>
-                            <li class="list-inline-item px-3 border-start d-none d-lg-inline-block">Envios gratis desde
-                                $300</li>
-                        </ul>
-                    </div>
-                    <div class="col-sm-5 d-flex justify-content-end">
-                        <!-- Language Dropdown-->
-                        <div class="dropdown border-end px-3"><a class="dropdown-toggle topbar-link" id="langsDropdown"
-                                href="#" data-bs-toggle="dropdown" data-bs-display="static" aria-haspopup="true"
-                                aria-expanded="false"><img class="topbar-flag"
-                                    src="https://d19m59y37dris4.cloudfront.net/sell/2-0/img/flag/gb.svg"
-                                    alt="english">English</a>
-                            <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated"
-                                aria-labelledby="langsDropdown"><a class="dropdown-item text-sm" href="#"><img
-                                        class="topbar-flag"
-                                        src="https://d19m59y37dris4.cloudfront.net/sell/2-0/img/flag/de.svg"
-                                        alt="german">German</a><a class="dropdown-item text-sm" href="#"> <img
-                                        class="topbar-flag"
-                                        src="https://d19m59y37dris4.cloudfront.net/sell/2-0/img/flag/fr.svg"
-                                        alt="french">French</a></div>
-                        </div>
-                        <!-- Currency Dropdown-->
-                        <div class="dropdown ps-3 ms-0"><a class="dropdown-toggle topbar-link" id="currencyDropdown"
-                                href="#" data-bs-toggle="dropdown" data-bs-display="static" aria-haspopup="true"
-                                aria-expanded="false">USD</a>
-                            <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated"
-                                aria-labelledby="currencyDropdown">
-                                <a class="dropdown-item text-sm" href="#">
-                                    EUR
-                                </a>
-                                <a class="dropdown-item text-sm" href="#">
-                                    GBP
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
         <!-- Top Bar End-->
         <!-- Navbar-->
         <nav class="navbar navbar-expand-lg navbar-sticky navbar-airy navbar-dark bg-fixed-white navbar-fixed-light"
-            style="background: #005f96 !important;">
+            style="background: #5a008a !important;">
             <div class="container-fluid">
                 <!-- Navbar Header  -->
                 <a class="navbar-brand" style="color:white !important" href="index.html"><svg class="navbar-brand-svg"

@@ -99,9 +99,9 @@
                                             <option value="Disparos">Disparos</option>
                                             <option value="Estrategia">Estrategia</option>
                                             <option value="Musical">Musical</option>
+                                            <option value="Peleas">Peleas</option>
                                             <option value="Peleas">Terror</option>
                                             <option value="Vehiculos">Vehiculos</option>
-                                            <option value="Peleas">Peleas</option>
                                         </select>
                                     </div>
                                 </div>
@@ -232,7 +232,7 @@
                                 </div>
                             </div>
                             <div class="card">
-                                <div class="card-body">
+                                <div class="card-body" v-if="variedades.length >= 1">
                                     <!-- List group -->
                                     <div class="list-group list-group-flush my-n3">
                                         <div class="list-group-item" v-for="item in variedades">
@@ -257,8 +257,8 @@
                                                 </div>
                                                 <div class="col-auto">
                                                     <!-- Button -->
-                                                    <button v-if="item.stock == 0" class="btn btn-sm btn-danger" type="button"
-                                                        v-b-modal="'delete-' + item._id">
+                                                    <button v-if="item.stock == 0" class="btn btn-sm btn-danger"
+                                                        type="button" v-b-modal="'delete-' + item._id">
                                                         Eliminar
                                                     </button>
                                                     <button v-if="item.stock >= 1" disabled
@@ -272,6 +272,19 @@
                                                     </b-modal>
                                                 </div>
                                             </div> <!-- / .row -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body text-center" v-if="variedades.length == 0">
+                                    <div class="col-12 text.center">
+                                        <div class="spinner-grow text-primary" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                        <div class="spinner-grow text-primary" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                        <div class="spinner-grow text-primary" role="status">
+                                            <span class="visually-hidden">Loading...</span>
                                         </div>
                                     </div>
                                 </div>
