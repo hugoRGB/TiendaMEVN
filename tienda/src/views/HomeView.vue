@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <section class="bg-danger" style="margin-top: 4rem;">
+    <section style="margin-top: 4rem; background-color: black;">
       <div class="container">
         <div class="row">
           <div class="col-lg-6 text-white text-center py-7">
@@ -51,7 +51,7 @@
       </div>
     </section>
     <!-- Agregar sección -->
-    <section style="background-color: #5a008a !important;">
+    <!-- <section style="background-color: #5a008a !important;">
       <div class="container">
         <div class="row">
           <div class="col-lg-6" style="background: right bottom no-repeat; background-size: contain; margin-top: 4rem;">
@@ -62,6 +62,41 @@
             <p class="mb-0">Texto</p>
             <h2 class="display-1 fw-bold mb-3">Texto</h2>
             <p><a class="btn btn-outline-light" href="#" target="_blank">Botón Opcional</a></p>
+          </div>
+        </div>
+      </div>
+    </section> -->
+    <section class="pt-6 pb-5 bg-danger">
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-8 mx-auto text-center mb-5">
+            <h2 class="text-uppercase" style="color: white;">Ofertas</h2>
+            <p class="lead" style="color: white;">Aprovecha los juegos en descuento que tenemos para ti.</p>
+          </div>
+        </div>
+        <div class="row" v-if="load_productos_descuento">
+          <div class="col-12 text-center">
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        </div>
+        <div class="row" v-if="!load_productos_descuento">
+          <!-- product-->
+          <div class="col-lg-3 col-md-4 col-6" v-for="item in productos_descuento">
+            <div class="product">
+              <div class="product-image">
+                <div class="ribbon ribbon-danger" v-if="item.descuento">Oferta</div>
+                <img class="img-fluid" :src="$url + '/obtener_portada_producto/' + item.portada" alt="product" />
+                <div class="product-hover-overlay"><a class="product-hover-overlay-link" href="detail.html"></a>
+                </div>
+              </div>
+              <div class="py-2">
+                <p class="text-sm mb-1" style="color: white; !important">{{ item.categoria }}</p>
+                <h3 class="h6 text-uppercase mb-1"><a style="color: white; !important" href="detail.html">{{ item.titulo }}</a></h3>
+                <span style="color: white; !important">{{ convertCurrency(item.precio) }}</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -162,8 +197,8 @@ export default {
     return {
       nuevos_productos: [],
       load_nuevos_productos: true,
-      productos_recomendados: [],
-      load_productos_recomendados: true
+      productos_descuento: [],
+      load_productos_descuento: true
     }
   },
   methods: {
@@ -182,23 +217,22 @@ export default {
     convertCurrency(number) {
       return currency_formatter.format(number, { code: 'USD' });
     },
-    init_productos_recomendados() {
-      this.load_nuevos_productos = true;
-      axios.get(this.$url + '/obtener_productos_recomendados', {
+    init_productos_descuento() {
+      this.load_productos_descuento = true;
+      axios.get(this.$url + '/obtener_productos_descuento', {
         headers: {
           'Content-Type': 'application/json'
         }
       }).then((result) => {
-        this.productos_recomendados = result.data;
-        this.load_productos_recomendados = false;
-        console.log(this.productos_recomendados);
+        this.productos_descuento = result.data;
+        this.load_productos_descuento = false;
+        console.log(this.productos_descuento);
       });
     }
   },
   beforeMount() {
     this.init_nuevos_productos();
-    this.init_productos_recomendados();
-    init_carousel.init();
+    this.init_productos_descuento();
   }
 }
 </script>

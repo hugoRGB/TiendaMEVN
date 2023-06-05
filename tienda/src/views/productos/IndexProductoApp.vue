@@ -72,7 +72,7 @@
                 <div class="sidebar col-xl-3 col-lg-4 order-lg-1">
                     <div class="sidebar-block px-3 px-lg-0 me-lg-4"><a class="d-lg-none block-toggler"
                             data-bs-toggle="collapse" href="#categoriesMenu" aria-expanded="false"
-                            aria-controls="categoriesMenu">Product Categories</a>
+                            aria-controls="categoriesMenu">Categorias</a>
                         <div class="expand-lg collapse" id="categoriesMenu">
                             <div class="nav nav-pills flex-column mt-4 mt-lg-0" role="menu">
                                 <div class="sidebar-menu-item mb-2 active" data-bs-toggle="collapse"
@@ -80,53 +80,15 @@
                                     aria-controls="subcategories_0" role="menuitem">
                                     <a class="nav-link active" href="#!">
                                         <div class="row">
-                                            <div class="col"><span>Jackets</span></div>
-                                            <div class="col" style="text-align: right !important;"><img
-                                                    src="/assets/media/angulo-abajo.png" style="width: 10px;" alt="">
-                                            </div>
+                                            <div class="col"><span>Categorias</span></div>
                                         </div>
                                     </a>
                                 </div>
                                 <div class="collapse show" id="subcategories_0">
-                                    <div class="nav nav-pills flex-column ms-3"><a class="nav-link mb-2" href="#!">Lorem
-                                            ipsum</a><a class="nav-link mb-2" href="#!">Dolor</a><a
-                                            class="nav-link mb-2" href="#!">Sit amet</a><a class="nav-link mb-2"
-                                            href="#!">Donec vitae</a>
-                                    </div>
-                                </div>
-                                <div class="sidebar-menu-item mb-2" data-bs-toggle="collapse"
-                                    data-bs-target="#subcategories_1" aria-expanded="false"
-                                    aria-controls="subcategories_1" role="menuitem"><a class="nav-link " href="#!">
-                                        <div class="row">
-                                            <div class="col"><span>Jackets</span></div>
-                                            <div class="col" style="text-align: right !important;"><img
-                                                    src="/assets/media/angulo-abajo.png" style="width: 10px;" alt="">
-                                            </div>
-                                        </div>
-                                    </a></div>
-                                <div class="collapse" id="subcategories_1">
-                                    <div class="nav nav-pills flex-column ms-3"><a class="nav-link mb-2" href="#!">Lorem
-                                            ipsum</a><a class="nav-link mb-2" href="#!">Dolor</a><a
-                                            class="nav-link mb-2" href="#!">Sit amet</a><a class="nav-link mb-2"
-                                            href="#!">Donec vitae</a>
-                                    </div>
-                                </div>
-                                <div class="sidebar-menu-item mb-2" data-bs-toggle="collapse"
-                                    data-bs-target="#subcategories_2" aria-expanded="false"
-                                    aria-controls="subcategories_2" role="menuitem"><a class="nav-link " href="#!">
-                                        <div class="row">
-                                            <div class="col"><span>Jackets</span></div>
-                                            <div class="col" style="text-align: right !important;"><img
-                                                    src="/assets/media/angulo-abajo.png" style="width: 10px;" alt="">
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="collapse" id="subcategories_2">
-                                    <div class="nav nav-pills flex-column ms-3"><a class="nav-link mb-2" href="#!">Sit
-                                            amet</a><a class="nav-link mb-2" href="#!">Donec vitae</a><a
-                                            class="nav-link mb-2" href="#!">Lorem ipsum</a><a class="nav-link mb-2"
-                                            href="#!">Dolor</a>
+                                    <div class="nav nav-pills flex-column ms-3">
+                                        <a style="cursor: pointer" v-for="item in categorias" class="nav-link mb-2"
+                                            v-on:click="redirectCategoria(item.categoria.titulo)">
+                                            {{ item.categoria.titulo }}</a>
                                     </div>
                                 </div>
                             </div>
@@ -297,6 +259,7 @@ export default {
             maxRange: null,
             productos: [],
             productos_const: [],
+            categorias: [],
             currentPage: 1,
             perPage: 9,
             get itemsForList() {
@@ -329,8 +292,13 @@ export default {
         }).then((result) => {
             this.productos = result.data;
             this.productos_const = this.productos;
+
+            if (this.$route.query.cat) {
+                this.init_producto_categoria();
+            }
             console.log(this.productos);
         });
+        this.init_categorias();
     },
     methods: {
         convertCurrency(number) {
@@ -353,6 +321,23 @@ export default {
             }
 
             console.log(this.sort_by);
+        },
+        init_categorias() {
+            axios.get(this.$url + '/listar_categorias_shop', {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then((result) => {
+                this.categorias = result.data;
+                console.log(this.categorias);
+            });
+        },
+        redirectCategoria(item) {
+            this.$router.push({ name: 'shop', query: { cat: item } });
+            this.init_producto_categoria();
+        },
+        init_producto_categoria() {
+            this.productos = this.productos_const.filter(item => item.categoria == this.$route.query.cat);
         }
     }
 }

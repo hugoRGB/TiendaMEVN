@@ -10,6 +10,7 @@ import IndexProductoApp from '../views/productos/IndexProductoApp.vue'
 import EditProductoApp from '../views/productos/EditProductoApp.vue'
 import GaleriaProductoApp from '../views/productos/GaleriaProductoApp.vue'
 import CreateIngresoApp from '../views/ingresos/CreateIngresoApp.vue'
+import IndexCategoriaApp from '../views/categorias/IndexCategoriaApp.vue'
 import jwt_decode from 'jwt-decode'
 
 Vue.use(VueRouter)
@@ -27,6 +28,8 @@ const routes = [
   { path: '/producto/galeria/:id', name: 'producto-galeria', component: GaleriaProductoApp, meta: { requiresAuth: true } },
 
   { path: '/ingreso/create', name: 'ingreso-create', component: CreateIngresoApp, meta: { requiresAuth: true } },
+
+  { path: '/categorias', name: 'categorias-index', component: IndexCategoriaApp, meta: { requiresAuth: true } },
 ]
 
 const router = new VueRouter({

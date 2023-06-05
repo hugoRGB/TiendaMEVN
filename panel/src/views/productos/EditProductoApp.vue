@@ -92,16 +92,8 @@
                                         </label>
                                         <!-- Input -->
                                         <select name="" class="form-select" v-model="producto.categoria">
-                                            <option value="" disabled selected>Seleccionar</option>
-                                            <option value="Acción">Acción</option>
-                                            <option value="Aventura">Aventura</option>
-                                            <option value="Deportes">Deportes</option>
-                                            <option value="Disparos">Disparos</option>
-                                            <option value="Estrategia">Estrategia</option>
-                                            <option value="Musical">Musical</option>
-                                            <option value="Peleas">Peleas</option>
-                                            <option value="Terror">Terror</option>
-                                            <option value="Vehiculos">Vehiculos</option>
+                                            <option :value="item.categoria.titulo" v-for="item in categorias">
+                                                {{ item.categoria.titulo }}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -221,7 +213,7 @@
                                     <small class="text-muted">
                                         Variedad
                                     </small>
-                                    <input type="text" class="form-control" placeholder="Tallas, colores..."
+                                    <input type="text" class="form-control" placeholder="Xbox One, PS4..."
                                         v-model="variedad.variedad">
                                 </div>
                                 <div class="col">
@@ -318,6 +310,7 @@ export default {
                 portada: undefined,
             },
             portada: undefined,
+            categorias: [],
             variedad: {},
             sku: '',
             variedades: []
@@ -333,6 +326,16 @@ export default {
             }).then((result) => {
                 this.producto = result.data;
                 this.str_image = this.$url + '/obtener_portada_producto/' + this.producto.portada;
+            });
+        },
+        init_categorias() {
+            axios.get(this.$url + '/listar_categorias_admin', {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': this.$store.state.token,
+                }
+            }).then((result) => {
+                this.categorias = result.data;
             });
         },
         uploadImage($event) {
@@ -537,6 +540,7 @@ export default {
     beforeMount() {
         this.init_data();
         this.init_variedades();
+        this.init_categorias();
     }
 }
 </script>

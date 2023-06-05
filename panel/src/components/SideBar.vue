@@ -88,6 +88,11 @@
                 <h6 class="navbar-heading">Control</h6>
                 <ul class="navbar-nav mb-md-4">
                     <li class="nav-item">
+                        <router-link to="/categorias" class="nav-link" active-class="active">
+                            <i class="fe fe-tag"></i> Categorias
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
                         <router-link to="/producto" class="nav-link" active-class="active">
                             <i class="fe fe-shopping-cart"></i> Productos
                         </router-link>

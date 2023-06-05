@@ -93,15 +93,7 @@
                                         <!-- Input -->
                                         <select name="" class="form-select" v-model="producto.categoria">
                                             <option value="" disabled selected>Seleccionar</option>
-                                            <option value="Acción">Acción</option>
-                                            <option value="Aventura">Aventura</option>
-                                            <option value="Deportes">Deportes</option>
-                                            <option value="Disparos">Disparos</option>
-                                            <option value="Estrategia">Estrategia</option>
-                                            <option value="Musical">Musical</option>
-                                            <option value="Peleas">Peleas</option>
-                                            <option value="Terror">Terror</option>
-                                            <option value="Vehiculos">Vehiculos</option>
+                                            <option :value="item.categoria.titulo" v-for="item in categorias">{{item.categoria.titulo}}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -229,10 +221,21 @@ export default {
                 descuento: false,
                 portada: undefined,
             },
-            portada: undefined
+            portada: undefined,
+            categorias: []
         }
     },
     methods: {
+        init_categorias() {
+            axios.get(this.$url + '/listar_categorias_admin', {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': this.$store.state.token,
+                }
+            }).then((result) => {
+                this.categorias = result.data;
+            });
+        },
         uploadImage($event) {
             var image;
 
@@ -349,5 +352,8 @@ export default {
             })
         }
     },
+    beforeMount() {
+        this.init_categorias();
+    }
 }
 </script>
