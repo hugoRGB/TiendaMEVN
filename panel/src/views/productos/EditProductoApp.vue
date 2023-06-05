@@ -100,7 +100,7 @@
                                             <option value="Estrategia">Estrategia</option>
                                             <option value="Musical">Musical</option>
                                             <option value="Peleas">Peleas</option>
-                                            <option value="Peleas">Terror</option>
+                                            <option value="Terror">Terror</option>
                                             <option value="Vehiculos">Vehiculos</option>
                                         </select>
                                     </div>
@@ -342,7 +342,7 @@ export default {
                 image = $event.target.files[0];
             }
 
-            if (image.size <= 100000) {
+            if (image.size <= 1000000) {
                 if (image.type == 'image/jpeg' || image.type == 'image/png' || image.type == 'image/webp' || image.type == 'image/jpg') {
                     this.str_image = URL.createObjectURL(image);
                     this.portada = image;
@@ -414,13 +414,13 @@ export default {
                 data = new FormData();
                 content = 'multipart/form-data';
 
-                fm.append('titulo', this.producto.titulo);
-                fm.append('categoria', this.producto.categoria);
-                fm.append('descripcion', this.producto.descripcion);
-                fm.append('str_variedad', this.producto.str_variedad);
-                fm.append('estado', this.producto.estado);
-                fm.append('descuento', this.producto.descuento);
-                fm.append('portada', this.producto.portada);
+                data.append('titulo', this.producto.titulo);
+                data.append('categoria', this.producto.categoria);
+                data.append('descripcion', this.producto.descripcion);
+                data.append('str_variedad', this.producto.str_variedad);
+                data.append('estado', this.producto.estado);
+                data.append('descuento', this.producto.descuento);
+                data.append('portada', this.producto.portada);
             } else {
                 content = 'application/json';
                 data = this.producto;

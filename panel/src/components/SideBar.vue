@@ -1,7 +1,6 @@
 <template>
     <nav class="navbar navbar-vertical fixed-start navbar-expand-md navbar-ligth" id="sidebar">
         <div class="container-fluid">
-
             <!-- Toggler -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarCollapse"
                 aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -9,8 +8,8 @@
             </button>
 
             <!-- Brand -->
-            <a class="navbar-brand" href="./index.html">
-                <img src="/assets/img/logo.svg" class="navbar-brand-img mx-auto" alt="...">
+            <a class="navbar-brand">
+                <img src="/assets/img/logo_g.svg" class="mx-auto" style="height: 80px; max-height: none;" alt="...">
             </a>
 
             <!-- User (xs) -->

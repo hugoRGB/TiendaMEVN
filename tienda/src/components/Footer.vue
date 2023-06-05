@@ -36,7 +36,9 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-4 mb-5 mb-lg-0">
-                        <div class="fw-bold text-uppercase text-lg text-white mb-3">Game Box</div>
+                        <div class="fw-bold text-uppercase text-lg text-white mb-3">
+                            <img src="/assets/media/logo.svg" height="30" alt="">
+                        </div>
                         <p class="text-white">Tus juegos favoritos, en un solo lugar.</p>
                         <ul class="list-inline">
                             <li class="list-inline-item"><a class="text-muted text-primary-hover" href="#"
