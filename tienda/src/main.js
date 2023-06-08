@@ -11,6 +11,7 @@ const socketConnection = SocketIO('http://localhost:4201');
 
 Vue.config.productionTip = false
 Vue.prototype.$envio = 200;
+Vue.prototype.$paises = ['Argentina', 'Bolivia','Chile', 'Estados Unidos', 'México','Perú'];
 Vue.prototype.$url = 'http://localhost:4201/api';
 Vue.prototype.$token = localStorage.getItem('token');
 

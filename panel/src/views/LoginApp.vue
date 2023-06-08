@@ -41,11 +41,6 @@
                                 <!-- Input -->
                                 <input class="form-control" v-model="password" type="password"
                                     placeholder="Ingrese su contraseña">
-
-                                <!-- Icon -->
-                                <span class="input-group-text">
-                                    <i class="fe fe-eye"></i>
-                                </span>
                             </div>
                         </div>
                         <!-- Submit -->

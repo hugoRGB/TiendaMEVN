@@ -446,6 +446,9 @@ export default {
         init_carousel.init_zoom();
         this.init_data();
         this.scrollToTop();
+    },
+    mounted() {
+        document.title = 'Producto';
     }
 }
 </script>

@@ -224,6 +224,9 @@ export default {
     this.init_nuevos_productos();
     this.init_productos_descuento();
     this.scrollToTop();
+  },
+  mounted() {
+    document.title = 'GameBox';
   }
 }
 </script>

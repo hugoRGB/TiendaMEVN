@@ -60,7 +60,8 @@
                                                     item.cantidad)
                                             }}</div>
                                             <div class="col-1 text-center">
-                                                <a class="cart-remove" style="cursor: pointer" v-on:click="eliminar(item._id)">
+                                                <a class="cart-remove" style="cursor: pointer"
+                                                    v-on:click="eliminar(item._id)">
                                                     <img src="/assets/icons/eliminar.png" style="width: 18px;">
                                                 </a>
                                             </div>
@@ -78,7 +79,7 @@
                         </div>
                         <div class="my-5 d-flex justify-content-between flex-column flex-lg-row">
                             <router-link class="btn btn-link text-muted" to="/shop"> Continuar comprando</router-link>
-                            <a class="btn btn-dark">Pagar</a>
+                            <router-link to="/checkout" class="btn btn-dark">Pagar</router-link>
                         </div>
                     </div>
                     <div class="col-lg-4">
@@ -120,12 +121,15 @@ export default {
         }
     },
     methods: {
+        scrollToTop() {
+            window.scrollTo(0, 0);
+        },
         init_carrito() {
             if (this.$store.state.token != null) {
                 this.load_data = true;
                 axios.get(this.$url + '/obtener_carrito_cliente', {
                     headers: {
-                        'Content-Type': 'applicatio,.json',
+                        'Content-Type': 'application/json',
                         'Authorization': this.$store.state.token
                     }
                 }).then((result) => {
@@ -145,7 +149,7 @@ export default {
         eliminar(id) {
             axios.delete(this.$url + '/eliminar_producto_carrito/' + id, {
                 headers: {
-                    'Content-Type': 'applicatio,.json',
+                    'Content-Type': 'application/json',
                     'Authorization': this.$store.state.token
                 }
             }).then((result) => {
@@ -156,6 +160,10 @@ export default {
     },
     beforeMount() {
         this.init_carrito();
+        this.scrollToTop();
+    },
+    mounted() {
+        document.title = 'Carrito';
     }
 }
 </script>

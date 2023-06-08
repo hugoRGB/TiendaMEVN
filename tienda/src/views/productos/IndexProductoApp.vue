@@ -275,6 +275,7 @@ export default {
         }
     },
     mounted() {
+        document.title = 'Tienda';
         noUiSlider.create(this.$refs.slider, {
             start: [this.slider.starMin, this.slider.starMax],
             step: this.slider.step,

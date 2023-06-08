@@ -189,6 +189,9 @@ export default {
         if (this.$store.state.token) {
             this.$router.push({ name: 'home' });
         }
+    },
+    mounted() {
+        document.title = 'Log In';
     }
 }
 </script>

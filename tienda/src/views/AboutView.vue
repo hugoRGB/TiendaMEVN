@@ -12,3 +12,20 @@
     </section>
   </div>
 </template>
+
+<script>
+export default {
+  name: "AboutView",
+  methods: {
+    scrollToTop() {
+            window.scrollTo(0, 0);
+        },
+  },
+  beforeMount() {
+    this.scrollToTop();
+  },
+  mounted() {
+    document.title = 'Acerca De';
+  }
+}
+</script>

@@ -13,18 +13,17 @@
                   <div class="col">
                     <!-- Pretitle -->
                     <h6 class="header-pretitle">
-                      Colaboradores
+                      Panel Administrador
                     </h6>
 
                     <!-- Title -->
                     <h1 class="header-title">
-                      Nuevo Colaborador
+                      GameBox
                     </h1>
                   </div>
                 </div> <!-- / .row -->
-                <div class="row align-items-center">
+                <!-- <div class="row align-items-center">
                   <div class="col">
-                    <!-- Nav -->
                     <ul class="nav nav-tabs nav-overflow header-tabs">
                       <li class="nav-item">
                         <a class="nav-link active">
@@ -37,7 +36,7 @@
                       </li>
                     </ul>
                   </div>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>

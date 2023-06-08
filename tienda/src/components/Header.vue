@@ -55,9 +55,8 @@
                                     &nbsp; {{ user.nombres.split(' ')[0] }}</span>
                                 <div class="dropdown-menu dropdown-menu-animated"
                                     aria-labelledby="categoryDropdownMenuLink" style="left: -50px !important">
-                                    <a class="dropdown-item" v-on:click="logout()">
-                                        <img src="/assets/icons/cerrar.png" style="width: 15px; text-align: left;">
-                                        Cerrar Sesión</a>
+                                    <router-link class="dropdown-item" to="/cuenta/direcciones">Direcciones</router-link>
+                                    <a class="dropdown-item" v-on:click="logout()">Cerrar Sesión</a>
                                 </div>
                             </a>
                         </div>
@@ -120,7 +119,7 @@
                                         <router-link class="btn btn-link text-dark me-3" to="/cart">Ver Carrito
                                             <img src="/assets/icons/shopping-bag.png" style="width: 15px;">
                                         </router-link>
-                                        <a class="btn btn-outline-dark" href="checkout1.html">Pagar</a>
+                                        <router-link to="/checkout" class="btn btn-outline-dark">Pagar</router-link>
                                     </div>
                                 </div>
                             </div>
