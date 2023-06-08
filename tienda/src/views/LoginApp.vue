@@ -175,6 +175,7 @@ export default {
                         this.$store.dispatch('saveToken', result.data.token);
                         this.$store.dispatch('saveUser', JSON.stringify(result.data.cliente));
                         this.$router.push({ name: 'home' });
+                        this.$socket.emit('send_cart', true);
                     }
                 }).catch((error) => {
                     console.log(error);
