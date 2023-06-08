@@ -31,41 +31,26 @@
           </div>
         </div>
         <div class="row" v-if="!load_nuevos_productos">
-          <!-- product-->
           <div class="col-lg-3 col-md-4 col-6" v-for="item in nuevos_productos">
-            <div class="product">
-              <div class="product-image">
-                <div class="ribbon ribbon-danger" v-if="item.descuento">Oferta</div>
-                <img class="img-fluid" :src="$url + '/obtener_portada_producto/' + item.portada" alt="product" />
-                <div class="product-hover-overlay"><a class="product-hover-overlay-link" href="detail.html"></a>
+            <router-link :to="{ name: 'show-producto', params: { slug: item.slug } }">
+              <div class="product">
+                <div class="product-image">
+                  <div class="ribbon ribbon-danger" v-if="item.descuento">Oferta</div>
+                  <img class="img-fluid" :src="$url + '/obtener_portada_producto/' + item.portada" alt="product" />
+                  <div class="product-hover-overlay"><a class="product-hover-overlay-link" href="detail.html"></a>
+                  </div>
+                </div>
+                <div class="py-2">
+                  <p class="text-muted text-sm mb-1">{{ item.categoria }}</p>
+                  <h3 class="h6 text-uppercase mb-1"><a class="text-dark" href="detail.html">{{ item.titulo }}</a></h3>
+                  <span class="text-muted">{{ convertCurrency(item.precio) }}</span>
                 </div>
               </div>
-              <div class="py-2">
-                <p class="text-muted text-sm mb-1">{{ item.categoria }}</p>
-                <h3 class="h6 text-uppercase mb-1"><a class="text-dark" href="detail.html">{{ item.titulo }}</a></h3>
-                <span class="text-muted">{{ convertCurrency(item.precio) }}</span>
-              </div>
-            </div>
+            </router-link>
           </div>
         </div>
       </div>
     </section>
-    <!-- Agregar sección -->
-    <!-- <section style="background-color: #5a008a !important;">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-6" style="background: right bottom no-repeat; background-size: contain; margin-top: 4rem;">
-            <img src="/assets/media/banner/spiderman-2.jpg" style="height: 410px;" alt="">
-          </div>
-          <div class="col-lg-6 text-white text-center py-7">
-            <h2 class="display-4 text-uppercase mb-4">Texto</h2>
-            <p class="mb-0">Texto</p>
-            <h2 class="display-1 fw-bold mb-3">Texto</h2>
-            <p><a class="btn btn-outline-light" href="#" target="_blank">Botón Opcional</a></p>
-          </div>
-        </div>
-      </div>
-    </section> -->
     <section class="pt-6 pb-5 bg-danger">
       <div class="container">
         <div class="row">
@@ -82,21 +67,24 @@
           </div>
         </div>
         <div class="row" v-if="!load_productos_descuento">
-          <!-- product-->
           <div class="col-lg-3 col-md-4 col-6" v-for="item in productos_descuento">
-            <div class="product">
-              <div class="product-image">
-                <div class="ribbon ribbon-danger" v-if="item.descuento">Oferta</div>
-                <img class="img-fluid" :src="$url + '/obtener_portada_producto/' + item.portada" alt="product" />
-                <div class="product-hover-overlay"><a class="product-hover-overlay-link" href="detail.html"></a>
+            <router-link :to="{ name: 'show-producto', params: { slug: item.slug } }">
+              <div class="product">
+                <div class="product-image">
+                  <div class="ribbon ribbon-danger" v-if="item.descuento">Oferta</div>
+                  <img class="img-fluid" :src="$url + '/obtener_portada_producto/' + item.portada" alt="product" />
+                  <div class="product-hover-overlay"><a class="product-hover-overlay-link" href="detail.html"></a>
+                  </div>
+                </div>
+                <div class="py-2">
+                  <p class="text-sm mb-1" style="color: white; !important">{{ item.categoria }}</p>
+                  <h3 class="h6 text-uppercase mb-1"><a style="color: white; !important" href="detail.html">{{
+                      item.titulo
+                  }}</a></h3>
+                  <span style="color: white; !important">{{ convertCurrency(item.precio) }}</span>
                 </div>
               </div>
-              <div class="py-2">
-                <p class="text-sm mb-1" style="color: white; !important">{{ item.categoria }}</p>
-                <h3 class="h6 text-uppercase mb-1"><a style="color: white; !important" href="detail.html">{{ item.titulo }}</a></h3>
-                <span style="color: white; !important">{{ convertCurrency(item.precio) }}</span>
-              </div>
-            </div>
+            </router-link>
           </div>
         </div>
       </div>
@@ -173,7 +161,6 @@
 .product-image {
   display: block;
   overflow: hidden;
-  height: 320px;
 }
 
 .img-fluid {
@@ -202,6 +189,9 @@ export default {
     }
   },
   methods: {
+    scrollToTop() {
+      window.scrollTo(0, 0);
+    },
     init_nuevos_productos() {
       this.load_nuevos_productos = true;
       axios.get(this.$url + '/obtener_nuevos_productos', {
@@ -233,6 +223,7 @@ export default {
   beforeMount() {
     this.init_nuevos_productos();
     this.init_productos_descuento();
+    this.scrollToTop();
   }
 }
 </script>

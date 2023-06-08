@@ -44,21 +44,23 @@
                     <div class="row" id="my-table">
                         <!-- product-->
                         <div class="col-xl-4 col-6" v-for="item in itemsForList">
-                            <div class="product">
-                                <div class="product-image">
-                                    <div class="ribbon ribbon-danger" v-if="item.descuento">Oferta</div>
-                                    <img class="img-fluid" :src="$url + '/obtener_portada_producto/' + item.portada"
-                                        alt="product" />
+                            <router-link :to="{ name: 'show-producto', params: { slug: item.slug } }">
+                                <div class="product">
+                                    <div class="product-image">
+                                        <div class="ribbon ribbon-danger" v-if="item.descuento">Oferta</div>
+                                        <img class="img-fluid" :src="$url + '/obtener_portada_producto/' + item.portada"
+                                            alt="product" />
+                                    </div>
+                                    <div class="py-2">
+                                        <p class="text-muted text-sm mb-1">{{ item.categoria }}</p>
+                                        <h3 class="h6 text-uppercase mb-1"
+                                            style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+                                            <a class="text-dark" href="detail.html">{{ item.titulo }}</a>
+                                        </h3>
+                                        <span class="text-muted">{{ convertCurrency(item.precio) }}</span>
+                                    </div>
                                 </div>
-                                <div class="py-2">
-                                    <p class="text-muted text-sm mb-1">{{ item.categoria }}</p>
-                                    <h3 class="h6 text-uppercase mb-1"
-                                        style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
-                                        <a class="text-dark" href="detail.html">{{ item.titulo }}</a>
-                                    </h3>
-                                    <span class="text-muted">{{ convertCurrency(item.precio) }}</span>
-                                </div>
-                            </div>
+                            </router-link>
                         </div>
                         <!-- /product-->
                     </div>
@@ -86,6 +88,8 @@
                                 </div>
                                 <div class="collapse show" id="subcategories_0">
                                     <div class="nav nav-pills flex-column ms-3">
+                                        <a style="cursor: pointer" class="nav-link mb-2" v-on:click="mostrarTodos()">
+                                            Ver Todos</a>
                                         <a style="cursor: pointer" v-for="item in categorias" class="nav-link mb-2"
                                             v-on:click="redirectCategoria(item.categoria.titulo)">
                                             {{ item.categoria.titulo }}</a>
@@ -94,11 +98,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="sidebar-block px-3 px-lg-0 me-lg-4"><a class="d-lg-none block-toggler"
-                            data-bs-toggle="collapse" href="#priceFilterMenu" aria-expanded="false"
-                            aria-controls="priceFilterMenu">Filter by price</a>
+                    <div class="sidebar-block px-3 px-lg-0 me-lg-4">
+                        <a class="d-lg-none block-toggler" data-bs-toggle="collapse" href="#priceFilterMenu"
+                            aria-expanded="false" aria-controls="priceFilterMenu">Filtrar por precio</a>
                         <div class="expand-lg collapse" id="priceFilterMenu">
-                            <h6 class="sidebar-heading d-none d-lg-block">Price </h6>
+                            <h6 class="sidebar-heading d-none d-lg-block">Precio </h6>
                             <div class="mt-4 mt-lg-0" id="slider-snap" ref="slider"> </div>
                             <div class="nouislider-values">
                                 <div class="min">De <span id="slider-snap-value-lower">{{ convertCurrency(minRange)
@@ -112,10 +116,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="sidebar-block px-3 px-lg-0 me-lg-4"><a class="d-lg-none block-toggler"
+                    <!-- <div class="sidebar-block px-3 px-lg-0 me-lg-4">
+                        <a class="d-lg-none block-toggler"
                             data-bs-toggle="collapse" href="#brandFilterMenu" aria-expanded="true"
                             aria-controls="brandFilterMenu">Filter by brand</a>
-                        <!-- Brand filter menu - this menu has .show class, so is expanded by default-->
                         <div class="expand-lg collapse show" id="brandFilterMenu">
                             <h6 class="sidebar-heading d-none d-lg-block">Brands </h6>
                             <form class="mt-4 mt-lg-0" action="#">
@@ -162,10 +166,10 @@
                             </form>
                         </div>
                     </div>
-                    <div class="sidebar-block px-3 px-lg-0 me-lg-4"> <a class="d-lg-none block-toggler"
+                    <div class="sidebar-block px-3 px-lg-0 me-lg-4">
+                        <a class="d-lg-none block-toggler"
                             data-bs-toggle="collapse" href="#sizeFilterMenu" aria-expanded="false"
                             aria-controls="sizeFilterMenu">Filter by size</a>
-                        <!-- Size filter menu-->
                         <div class="expand-lg collapse" id="sizeFilterMenu">
                             <h6 class="sidebar-heading d-none d-lg-block">Size </h6>
                             <form class="mt-4 mt-lg-0" action="#">
@@ -196,10 +200,10 @@
                             </form>
                         </div>
                     </div>
-                    <div class="sidebar-block px-3 px-lg-0 me-lg-4"><a class="d-lg-none block-toggler"
+                    <div class="sidebar-block px-3 px-lg-0 me-lg-4">
+                        <a class="d-lg-none block-toggler"
                             data-bs-toggle="collapse" href="#colourFilterMenu" aria-expanded="false"
                             aria-controls="colourFilterMenu">Filter by colour</a>
-                        <!-- Size filter menu-->
                         <div class="expand-lg collapse" id="colourFilterMenu">
                             <h6 class="sidebar-heading d-none d-lg-block">Colour </h6>
                             <div class="mt-4 mt-lg-0">
@@ -231,7 +235,7 @@
                                 </ul>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <!-- /Sidebar end-->
             </div>
@@ -299,8 +303,12 @@ export default {
             console.log(this.productos);
         });
         this.init_categorias();
+        this.scrollToTop();
     },
     methods: {
+        scrollToTop() {
+            window.scrollTo(0, 0);
+        },
         convertCurrency(number) {
             return currency_formatter.format(number, { code: 'USD' });
         },
@@ -329,15 +337,25 @@ export default {
                 }
             }).then((result) => {
                 this.categorias = result.data;
-                console.log(this.categorias);
             });
         },
         redirectCategoria(item) {
-            this.$router.push({ name: 'shop', query: { cat: item } });
+            this.$router.push({ name: 'shop', query: { cat: item } }).catch(() => { });;
             this.init_producto_categoria();
         },
         init_producto_categoria() {
             this.productos = this.productos_const.filter(item => item.categoria == this.$route.query.cat);
+        },
+        mostrarTodos() {
+            this.productos = this.productos_const;
+        }
+    },
+    watch: {
+        minRange: function (value) {
+            this.productos = this.productos_const.filter(item => item.precio >= value);
+        },
+        maxRange: function (value) {
+            this.productos = this.productos_const.filter(item => item.precio <= value);
         }
     }
 }

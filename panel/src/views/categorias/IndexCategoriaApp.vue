@@ -34,7 +34,7 @@
                                 <div class="input-group mb-3">
                                     <input type="text" class="form-control" placeholder="Nueva categoria"
                                         v-model="nueva_categoria">
-                                    <button class="btn btn-dark" v-on:click="crear_categoria()">Crear categoría</button>
+                                    <button class="btn btn-primary" v-on:click="crear_categoria()">Crear categoría</button>
                                 </div>
                             </div>
                         </div>
@@ -43,13 +43,7 @@
                                 <ul class="list-group list-group-flush list my-n3">
                                     <li class="list-group-item" v-for="item in categorias">
                                         <div class="row align-items-center">
-                                            <div class="col-auto">
-                                                <!-- Avatar -->
-                                                <a href="profile-posts.html" class="avatar">
-                                                    <img src="https://dashkit.goodthemes.co/assets/img/avatars/profiles/avatar-5.jpg"
-                                                        alt="..." class="avatar-img rounded-circle">
-                                                </a>
-                                            </div>
+
                                             <div class="col ms-n2">
                                                 <!-- Title -->
                                                 <h4 class="mb-1 name">

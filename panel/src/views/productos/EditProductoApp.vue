@@ -54,7 +54,7 @@
                                             </h4>
                                             <!-- Text -->
                                             <small class="text-muted">
-                                                PNG or JPG no bigger than 1000px wide and tall.
+                                                PNG, JPG, JPEG, WEBP de 1024 x 1024 px. peso 1MB.
                                             </small>
                                         </div>
                                     </div> <!-- / .row -->

@@ -491,3 +491,47 @@ $(function () {
 
     objectFitImages();
 });
+
+export const init_carousel = {
+    init_galeria: function () {
+        setTimeout(() => {
+            $(".detail-slider").owlCarousel({
+                loop: true,
+                items: 1,
+                thumbs: true,
+                thumbsPrerendered: true,
+                responsiveClass: true,
+                responsive: {
+                    0: {
+                        items: 1,
+                        dots: true,
+                    },
+                    768: {
+                        items: 1,
+                        dots: false,
+                    },
+                },
+            });
+        }, 50);
+    },
+    init_zoom: function () {
+        setTimeout(() => {
+            const lightbox = GLightbox({
+                touchNavigation: true,
+                //loop: true,
+                autoplayVideos: true,
+            });
+
+            // ------------------------------------------------------- //
+            //   Image zoom
+            // ------------------------------------------------------ //
+
+            $('[data-bs-toggle="zoom"]').each(function () {
+                $(this).zoom({
+                    url: $(this).attr("data-image"),
+                    duration: 0,
+                });
+            });
+        }, 50);
+    }
+}

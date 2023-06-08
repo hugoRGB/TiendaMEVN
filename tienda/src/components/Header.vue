@@ -255,14 +255,6 @@
                         <div class="nav-item navbar-icon-link" data-bs-toggle="search">
                             <img src="/assets/icons/search.png" style="width: 25px;" />
                         </div>
-                        <!-- User Not Logged - link to login page-->
-                        <div class="nav-item">
-                            <router-link class="navbar-icon-link" to="/login">
-                                <img src="/assets/icons/user.png" style="width: 25px;" />
-                                <span
-                                    class="text-sm ms-2 ms-lg-0 text-uppercase text-sm fw-bold d-none d-sm-inline d-lg-none">Login</span>
-                            </router-link>
-                        </div>
                         <!-- Cart Dropdown-->
                         <div class="nav-item dropdown">
                             <a class="navbar-icon-link d-lg-none" href="cart.html">
@@ -346,6 +338,26 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- User Not Logged - link to login page-->
+                        <div class="nav-item">
+                            <router-link v-if="!$store.state.token" class="navbar-icon-link" to="/login">
+                                <img src="/assets/icons/user.png" style="width: 25px;" />
+                                <span
+                                    class="text-sm ms-2 ms-lg-0 text-uppercase text-sm fw-bold d-none d-sm-inline d-lg-none">Log
+                                    in</span>
+                            </router-link>
+                            <router-link v-if="$store.state.token" class="navbar-icon-link" to="/login">
+                                <img src="/assets/icons/user.png" style="width: 25px;" />
+                                <span class="text-sm ms-2 ms-lg-0 text-uppercase text-sm fw-bold d-none d-sm-inline">
+                                    &nbsp; {{ user.nombres.split(' ')[0] }}</span>
+                            </router-link>
+                        </div>
+                        <div class="nav-item" style="cursor: pointer" v-if="$store.state.token" v-on:click="logout()">
+                            <img src="/assets/icons/cerrar.png" style="width: 25px;" />
+                            <span
+                                class="text-sm ms-2 ms-lg-0 text-uppercase text-sm fw-bold d-none d-sm-inline d-lg-none">Log
+                                out</span>
+                        </div>
                     </div>
 
                 </div>
@@ -378,10 +390,35 @@
 </template>
 
 <script>
+import axios from 'axios';
 import router from '@/router';
 
 export default {
     name: "Header",
-    components: { router }
+    components: { router },
+    data() {
+        return {
+            user: JSON.parse(this.$store.state.user)
+        }
+    },
+    methods: {
+        logout() {
+            this.$store.dispatch('logout');
+            this.$router.push({ name: 'home' }).catch(() => { });
+        },
+        init_carrito() {
+            axios.get(this.$url + '/obtener_carrito_cliente', {
+                headers: {
+                    'Content-Type': 'applicatio,.json',
+                    'Authorization': this.$store.state.token
+                }
+            }).then((result) => {
+                console.log(result);
+            });
+        }
+    },
+    beforeMount() {
+        this.init_carrito();
+    }
 }
 </script>

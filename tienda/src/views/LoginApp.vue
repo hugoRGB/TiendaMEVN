@@ -45,8 +45,8 @@
                                         <div>{{ msm_error_login }}</div>
                                     </div>
                                     <div class="mb-4 text-center">
-                                        <button class="btn btn-outline-dark" type="button" v-on:click="login()"><i
-                                                class="fa fa-sign-in-alt me-2"></i>Iniciar Sesión</button>
+                                        <button class="btn btn-outline-dark" type="button" v-on:click="login()">Iniciar
+                                            Sesión</button>
                                     </div>
                                 </form>
                             </div>
@@ -92,8 +92,7 @@
                                     </div>
                                     <div class="mb-4 text-center">
                                         <button class="btn btn-outline-dark" type="button"
-                                            v-on:click="validar_registro()"><i
-                                                class="far fa-user me-2"></i>Registrar</button>
+                                            v-on:click="validar_registro()">Registrar</button>
                                     </div>
                                 </form>
                             </div>
@@ -107,6 +106,7 @@
 
 <script>
 import axios from 'axios';
+import swal from 'sweetalert';
 
 export default {
     name: 'LoginApp',
@@ -120,6 +120,9 @@ export default {
         }
     },
     methods: {
+        scrollToTop() {
+            window.scrollTo(0, 0);
+        },
         validar_registro() {
             if (!this.cliente.nombres) {
                 this.msm_error = 'Ingrese los nombres.';
@@ -129,6 +132,7 @@ export default {
                 this.msm_error = 'Ingrese una contraseña.';
             } else {
                 this.msm_error = '';
+                swal('SUCCESS', 'El registro se realizó correctamente', 'success');
                 axios.post(this.$url + '/registro_cliente_ecommerce', this.cliente, {
                     headers: {
                         'Content-Type': 'application/json'
@@ -136,6 +140,7 @@ export default {
                 }).then((result) => {
                     if (result.data.message) {
                         this.msm_error = result.data.message;
+                        swal('ERROR', this.msm_error, 'error');
                     } else {
                         this.msm_error = '';
                         console.log(result);
@@ -156,7 +161,7 @@ export default {
                     email: this.email,
                     password: this.password
                 };
-
+                swal('SUCCESS', 'Inicio de Sesión Exitoso', 'success');
                 axios.post(this.$url + '/login_cliente', data, {
                     headers: {
                         'Content-Type': 'application/json'
@@ -165,14 +170,23 @@ export default {
                     console.log(result);
                     if (result.data.message) {
                         this.msm_error_login = result.data.message;
+                        swal('ERROR', this.msm_error_login, 'error');
                     } else {
                         this.$store.dispatch('saveToken', result.data.token);
+                        this.$store.dispatch('saveUser', JSON.stringify(result.data.cliente));
                         this.$router.push({ name: 'home' });
                     }
                 }).catch((error) => {
                     console.log(error);
+                    swal('ERROR', error, 'error');
                 });
             }
+        }
+    },
+    beforeMount() {
+        this.scrollToTop();
+        if (this.$store.state.token) {
+            this.$router.push({ name: 'home' });
         }
     }
 }
