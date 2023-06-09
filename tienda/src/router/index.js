@@ -8,6 +8,7 @@ import ShowProductoApp from '../views/productos/ShowProductoApp.vue'
 import CarritoApp from '../views/CarritoApp.vue'
 import DireccionesApp from '../views/cuenta/DireccionesApp.vue'
 import CheckoutApp from '../views/CheckoutApp.vue'
+import VerificacionApp from '../views/VerificacionApp.vue'
 
 Vue.use(VueRouter)
 
@@ -24,6 +25,7 @@ const routes = [
   { path: '/cart', name: 'cart', component: CarritoApp },
   { path: '/cuenta/direcciones', name: 'direcciones', component: DireccionesApp },
   { path: '/checkout', name: 'checkout', component: CheckoutApp },
+  { path: '/verificacion/:estado', name: 'verificacion', component: VerificacionApp },
 ]
 
 const router = new VueRouter({

@@ -90,7 +90,6 @@
                         </div>
                         <div class="mb-5 d-flex justify-content-between flex-column flex-lg-row">
                             <router-link class="btn btn-link text-muted" to="/shop">Regresar a la tienda</router-link>
-                            <router-link class="btn btn-dark">Proceder al pago</router-link>
                         </div>
                     </div>
                     <div class="col-lg-4">
@@ -102,11 +101,14 @@
                                 <p class="text-sm">Shipping and additional costs are calculated based on values you have
                                     entered.</p>
                                 <ul class="order-summary mb-0 list-unstyled">
-                                    <li class="order-summary-item"><span>Subtotal</span><span>{{ convertCurrency(total) }}</span></li>
-                                    <li class="order-summary-item"><span>Envio</span><span>{{ convertCurrency($envio) }}</span></li>
+                                    <li class="order-summary-item"><span>Subtotal</span><span>{{ convertCurrency(total)
+                                    }}</span></li>
+                                    <li class="order-summary-item"><span>Envio</span><span>{{ convertCurrency($envio)
+                                    }}</span></li>
 
                                     <li class="order-summary-item border-0"><span>Total</span><strong
-                                            class="order-summary-total">{{ convertCurrency(total + $envio) }}</strong></li>
+                                            class="order-summary-total">{{ convertCurrency(total + $envio) }}</strong>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -138,7 +140,7 @@
                                 </div>
                             </div>
                             <div class="block-footer">
-                                <a class="btn btn-dark" id="btnBuy" style="cursor: pointer;width: 100%;">PAGAR</a>
+                                <a class="btn btn-dark" id="btnBuy" style="cursor: pointer;width: 100%;" v-on:click="crearPreferencia()">PAGAR</a>
                                 <!--  <button class="btn btn-dark btnBuy" style="cursor: pointer" disabled>Procesando...</button> -->
                             </div>
                         </div>
@@ -162,7 +164,8 @@ export default {
             venta: {},
             productos: [],
             total: 0,
-            load_data: true
+            load_data: true,
+            items: []
         }
     },
     methods: {
@@ -199,12 +202,47 @@ export default {
                     for (var item of result.data.carrito_general) {
                         let subtotal = item.producto.precio * item.cantidad;
                         this.total = this.total + subtotal;
+
+                        this.items.push({
+                            title: item.producto.titulo,
+                            quantity: item.cantidad,
+                            unit_price: item.producto.precio,
+                            currency_id: 'MXN'
+                        });
                     }
+
+                    this.items.push({
+                            title: 'Envío',
+                            quantity: 1,
+                            unit_price: this.$envio,
+                            currency_id: 'MXN'
+                        });
+
                     this.productos = result.data.carrito_general;
                     this.load_data = false;
                 });
             }
         },
+        crearPreferencia() {
+            let data = {
+                back_urls: {
+                    success: 'http://localhost:8081/verificacion/success',
+                    pending: 'http://localhost:8081/verificacion/pending',
+                    failure: 'http://localhost:8081/verificacion/failure'
+                },
+                items: this.items,
+                auto_return: 'approved'
+            }
+
+            axios.post('https://api.mercadopago.com/checkout/preferences', data, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer TEST-8491575806182039-060817-ee9ce5b0aa53395e93f986f98bab0ffd-1381254353'
+                }
+            }).then((result) => {
+                console.log(result);
+            });
+        }
     },
     beforeMount() {
         this.scrollToTop();
